@@ -1,0 +1,355 @@
+/* --- Custom Font --- */
+@font-face {
+  font-family: 'Asimovian';
+  src: url('Asimovian.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* --- Global Styles --- */
+html, body {
+  margin: 0;
+  font-family: 'Asimovian', Arial, sans-serif;
+  background: #000;
+  color: #fff;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* --- Header & Navigation --- */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #333;
+  background: #000;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+nav a {
+  margin: 0 1rem;
+  text-decoration: none;
+  color: #aaa;
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: #fff;
+}
+
+/* Highlight active nav link 
+nav a[href="Proxy.html"] {
+  color: red !important;
+} */
+
+/* --- Buttons --- */
+.theme-btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  background-color: #252525;
+  color: #fff;
+  transition: background 0.2s, color 0.2s;
+}
+
+.theme-btn:hover {
+  background-color: #444;
+}
+
+/* --- Hero Section --- */
+.hero {
+  text-align: center;
+  padding: 5rem 2rem;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero h2 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  color: #bbb;
+}
+
+/* --- Features Grid --- */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 4rem 2rem;
+}
+
+.card {
+  background: rgba(50, 50, 50, 0.6);
+  border: 1px solid #333;
+  border-radius: 16px;
+  padding: 3rem;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  cursor: pointer;
+}
+
+/* --- Footer --- */
+footer {
+  text-align: center;
+  padding: 4rem 2rem;
+  border-top: 1px solid #333;
+  color: #777;
+  background: #000;
+}
+
+/* --- Games Page --- */
+.games-page main {
+  flex: 1;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  column-gap: 10px;
+  row-gap: 15px;
+  justify-items: center;
+  align-items: center;
+}
+
+.games-page main img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.games-page main img:hover {
+  transform: scale(1.1);
+}
+
+/* --- Responsive Grids --- */
+@media (max-width: 1200px) {
+  .games-page main {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .games-page main {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .games-page main {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- Iframes & Game Overlay --- */
+#game-frame, iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+#game-frame {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  height: 90vh;
+  z-index: 1000;
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.9);
+}
+
+#game-container {
+  display: none;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+#overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 990;
+}
+
+/* --- Close Button --- */
+#close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: #000;
+  color: #fff;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1001;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  transition: transform 0.14s ease, background 0.14s ease;
+}
+
+#close-btn:hover {
+  background: #2b2b2b;
+  transform: scale(1.08);
+}
+
+#close-btn:focus {
+  outline: 2px solid rgba(79,70,229,0.4);
+}
+
+@media (max-width: 480px) {
+  #game-container {
+    width: 98vw;
+    height: 92vh;
+  }
+  #close-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+}
+
+/* --- Lock Screen --- */
+#lock-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url("Cloak.png") center center / cover no-repeat;
+  z-index: 9999;
+}
+
+#lock-screen.fade-out {
+  opacity: 0;
+  transition: opacity 1s ease;
+  pointer-events: none;
+}
+
+/* --- Settings & Theme Panels --- */
+.settings-panel {
+  background-color: rgb(15, 15, 15);
+  border: 1px solid rgb(8, 8, 8);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: inline-block;
+  color: #fff;
+  margin: 1rem 0 1rem 2rem;
+}
+
+.settings-row {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  margin-top: 1rem;
+  margin-left: 1rem; /* slightly reduced to balance layout */
+}
+
+.theme-panel {
+  background: rgb(59, 59, 59);
+  border: 1px solid #fff;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  width: fit-content;
+  min-width: 200px;
+  margin-top: 1rem;
+  color: #fff;
+}
+
+.theme-panel p {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"] {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 4px;
+  padding: 0.3rem 0.5rem;
+  color: #fff; /* fixed for visibility */
+}
+
+input[type="text"]::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+button.theme-btn {
+  margin-top: 0.5rem;
+}
+
+/* --- Game Image Hover Overlay --- */
+.game-card {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.game-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.game-card:hover img {
+  transform: scale(1.1);
+}
+
+.game-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none; /* overlay won't block clicks */
+  text-shadow: 0 0 10px #000;
+}
+
+.game-card:hover .game-overlay {
+  opacity: 1;
+}

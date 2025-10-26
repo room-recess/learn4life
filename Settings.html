@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study.com</title>
+
+  <!-- Favicon -->
+  <link id="favicon" rel="icon" type="image/png" href="idk.png">
+
+  <!-- Theme stylesheet -->
+  <link id="theme-link" rel="stylesheet" href="DStyles.css">
+</head>
+<body>
+
+  <!-- Lock screen -->
+  <div id="lock-screen" style="
+    display: flex;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: black url('Cloak.png') center center / cover no-repeat;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: red;
+    font-size: 2em;
+    text-align: center;
+    z-index: 9999;
+  ">
+  </div>
+
+<script>
+  // --- Lock screen key combo ---
+  const unlockKeys = ['Shift', 'O', 'P', 'E', 'N'];
+  const pressed = new Set();
+  const lockScreen = document.getElementById('lock-screen');
+
+  if (!sessionStorage.getItem("accessGranted")) {
+    lockScreen.style.display = "flex";
+  } else {
+    lockScreen.style.display = "none";
+  }
+
+  document.addEventListener('keydown', e => {
+    pressed.add(e.key);
+    if (unlockKeys.every(key => pressed.has(key))) {
+      lockScreen.style.display = "none";
+      sessionStorage.setItem("accessGranted", "true");
+    }
+  });
+
+  document.addEventListener('keyup', e => pressed.delete(e.key));
+</script>
+
+<header>
+  <h1>Notadealer's Portal</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="Gag.html">Games</a>
+    <a href="pro.html">Proxy</a>
+    <a href="Settings.html">Settings</a>
+  </nav>
+</header>
+
+<main>
+  <div class="settings-panel">
+    <h2>Settings</h2>
+
+    <div class="settings-row">
+      <!-- Theme Selection -->
+      <div class="theme-panel">
+        <p>Select a theme:</p>
+        <button class="theme-btn" data-theme="DStyles.css">Void</button>
+        <button class="theme-btn" data-theme="Wstyles.css">Light</button>
+      </div>
+
+      <!-- Tab Customization -->
+      <div class="theme-panel">
+        <p>Tab Customization: dont use not working rn</p>
+        <label>Title:<br>
+          <input type="text" id="tab-title" placeholder="Enter tab name">
+        </label>
+        <br><br>
+        <label>Icon URL:<br>
+          <input type="text" id="tab-icon" placeholder="Enter icon image URL">
+        </label>
+        <br><br>
+        <button id="apply-tab-settings">Apply</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  const themeLink = document.getElementById('theme-link');
+
+  // --- Theme buttons ---
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const theme = btn.dataset.theme;
+      themeLink.href = theme;
+      localStorage.setItem('selectedTheme', theme);
+    });
+  });
+
+  // --- Tab customization ---
+  const titleInput = document.getElementById('tab-title');
+  const iconInput = document.getElementById('tab-icon');
+  const applyBtn = document.getElementById('apply-tab-settings');
+  const favicon = document.querySelector("link[rel~='icon']");
+
+  const savedTitle = sessionStorage.getItem('tabTitle');
+  const savedIcon = sessionStorage.getItem('tabIcon');
+  if (savedTitle) {
+    document.title = savedTitle;
+    titleInput.value = savedTitle;
+  }
+  if (savedIcon) {
+    favicon.href = savedIcon;
+    iconInput.value = savedIcon;
+  }
+
+  applyBtn.addEventListener('click', () => {
+    const newTitle = titleInput.value.trim();
+    const newIcon = iconInput.value.trim();
+    if (newTitle) {
+      document.title = newTitle;
+      sessionStorage.setItem('tabTitle', newTitle);
+    }
+    if (newIcon) {
+      favicon.href = newIcon;
+      sessionStorage.setItem('tabIcon', newIcon);
+    }
+    alert('Tab settings applied!');
+  });
+    const savedTheme = localStorage.getItem('selectedTheme');
+    if (savedTheme) themeLink.href = savedTheme;
+</script>
+
+</body>
+</html>
