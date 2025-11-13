@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study.com</title>
+
+  <!-- Favicon -->
+  <link id="favicon" rel="icon" type="image/png" href="idk.png">
+
+  <!-- Theme stylesheet -->
+  <link id="theme-link" rel="stylesheet" href="DStyles.css">
+</head>
+<body style="margin:0;display:flex;flex-direction:column;height:100vh;">
+
+  <header>
+    <h1>Notadealer's Portal</h1>
+    <nav>
+      <a href="Index.html">Home</a>
+      <a href="Gag.html">Games</a>
+      <a href="pro.html">Proxy</a>
+      <a href="Settings.html">Settings</a>
+    </nav>
+  </header>
+
+  <iframe id="proxy-frame"
+    src="https://frogee.goip.it/"
+    style="flex:1;border:none;width:100%;">
+  </iframe>
+
+<div id="lock-screen" style="
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: black url('Cloak.png') center center / cover no-repeat;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: red;
+      font-size: 2em;
+      text-align: center;
+      z-index: 9999;
+      ">
+    </div>
+
+  <script>
+  const unlockKeys = ['Shift', 'O', 'P', 'E', 'N']; // customize this combo
+  const pressed = new Set();
+  const lockScreen = document.getElementById('lock-screen');
+  const themeLink = document.getElementById('theme-link');
+  const favicon = document.querySelector("link[rel~='icon']");
+
+  // Skip lock if already unlocked
+  if (sessionStorage.getItem("accessGranted")) {
+    lockScreen.style.display = "none";
+  }
+
+  document.addEventListener('keydown', (e) => {
+    pressed.add(e.key);
+    if (unlockKeys.every(key => pressed.has(key))) {
+      lockScreen.style.display = "none";
+      sessionStorage.setItem("accessGranted", "true");
+    }
+  });
+
+  document.addEventListener('keyup', (e) => {
+    pressed.delete(e.key);
+  });
+
+
+    const buttons = document.querySelectorAll('.theme-btn[data-theme]');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const theme = btn.dataset.theme;
+        themeLink.href = theme;
+        localStorage.setItem('selectedTheme', theme);
+      });
+    });
+
+    const titleInput = document.getElementById('tab-title');
+    const iconInput = document.getElementById('tab-icon');
+    const applyBtn = document.getElementById('apply-tab-settings');
+
+    const savedTitle = localStorage.getItem('tabTitle');
+    const savedIcon = localStorage.getItem('tabIcon');
+
+    if (savedTitle) document.title = savedTitle;
+    if (savedIcon) favicon.href = savedIcon;
+    if (titleInput) titleInput.value = savedTitle || '';
+    if (iconInput) iconInput.value = savedIcon || '';
+
+    if (applyBtn) {
+      applyBtn.addEventListener('click', () => {
+        const newTitle = titleInput.value.trim();
+        const newIcon = iconInput.value.trim();
+
+        if (newTitle) {
+          document.title = newTitle;
+          localStorage.setItem('tabTitle', newTitle);
+        }
+
+        if (newIcon) {
+          favicon.href = newIcon;
+          localStorage.setItem('tabIcon', newIcon);
+        }
+
+        alert('Tab settings applied!');
+      });
+    }
+
+    const savedTheme = localStorage.getItem('selectedTheme');
+    if (savedTheme) themeLink.href = savedTheme;
+  </script>
+
+</body>
+</html>
